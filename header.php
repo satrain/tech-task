@@ -34,7 +34,7 @@
 			<a href="/"><img src="/wp-content/uploads/2022/03/logo.png"></a>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation">
+		<nav id="site-navigation" class="main-navigation desktop-navigation">
 			<?php
 			wp_nav_menu(
 				array(
@@ -44,5 +44,25 @@
 			);
 			?>
 		</nav><!-- #site-navigation -->
-		<button class="btn header-btn"><?php esc_html_e( 'Register', 'tech-task' ); ?></button>
+		<a class="btn header-btn"><?php esc_html_e( 'Register', 'tech-task' ); ?></a>
+
+		<div class="hamburger" onclick="changeHamburgerMenu(this)">
+			<div class="bar1"></div>
+			<div class="bar2"></div>
+			<div class="bar3"></div>
+		</div>
 	</header><!-- #masthead -->
+
+	<div class="mobile-menu-overlay">
+		<nav class="mobile-navigation">
+			<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'menu-1',
+						'menu_id'        => 'primary-menu',
+					)
+				);
+			?>
+		</nav>
+		<a class="btn"><?php esc_html_e( 'Register', 'tech-task' ); ?></a>
+	</div>

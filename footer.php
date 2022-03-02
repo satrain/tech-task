@@ -10,22 +10,29 @@
  */
 
 ?>
-
-	<footer id="colophon" class="site-footer">
-		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'tech-task' ) ); ?>">
+	<div class="footer-cta container">
+		<h2>Do you have any <span>questions?</span></h2>
+		<a href="#" class="welcome-btn"><img src="/wp-content/uploads/2022/03/arrow-btn.png"> Contact us</a>
+	</div>
+	<div class="footer-wrapper container">
+		<footer id="colophon" class="site-footer">
+			<div class="site-info">
+				<a href="/"><img src="/wp-content/uploads/2022/03/footer-logo.png"></a>
 				<?php
-				/* translators: %s: CMS name, i.e. WordPress. */
-				printf( esc_html__( 'Proudly powered by %s', 'tech-task' ), 'WordPress' );
+				wp_nav_menu(
+					array(
+						'theme_location' => 'menu-1',
+						'menu_id'        => 'primary-menu',
+					)
+				);
 				?>
-			</a>
-			<span class="sep"> | </span>
-				<?php
-				/* translators: 1: Theme name, 2: Theme author. */
-				printf( esc_html__( 'Theme: %1$s by %2$s.', 'tech-task' ), 'tech-task', '<a href="http://underscores.me/">Underscores.me</a>' );
-				?>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
+				<a href="#" class="welcome-btn"><img src="/wp-content/uploads/2022/03/arrow-btn.png"> Register</a>
+			</div><!-- .site-info -->
+			<div class="footer-congress">
+				<img src="/wp-content/uploads/2022/03/footer-congress-image.png">
+			</div>
+		</footer><!-- #colophon -->
+	</div>
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

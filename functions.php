@@ -146,6 +146,9 @@ function tech_task_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	wp_enqueue_script( 'main-js', get_template_directory_uri() . '/assets/js/main.js', array(), _S_VERSION, true );
+	wp_enqueue_script('main-js');
 }
 add_action( 'wp_enqueue_scripts', 'tech_task_scripts' );
 
@@ -183,4 +186,146 @@ function special_nav_class ($classes, $item) {
         $classes[] = 'active ';
     }
     return $classes;
+}
+
+
+function sessions_custom_post_type() {
+	$labels = array(
+		'name'                => __( 'Sessions' ),
+		'singular_name'       => __( 'Session'),
+		'menu_name'           => __( 'Sessions'),
+		'parent_item_colon'   => __( 'Parent Session'),
+		'all_items'           => __( 'All Sessions'),
+		'view_item'           => __( 'View Session'),
+		'add_new_item'        => __( 'Add New Session'),
+		'add_new'             => __( 'Add New'),
+		'edit_item'           => __( 'Edit Session'),
+		'update_item'         => __( 'Update Session'),
+		'search_items'        => __( 'Search Session'),
+		'not_found'           => __( 'Not Found'),
+		'not_found_in_trash'  => __( 'Not found in Trash')
+	);
+	$args = array(
+		'label'               => __( 'sessions'),
+		'description'         => __( 'Sessions CPT'),
+		'labels'              => $labels,
+		'supports'            => array( 'title'),
+		'public'              => true,
+		'hierarchical'        => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_admin_bar'   => true,
+		'has_archive'         => true,
+		'can_export'          => true,
+		'exclude_from_search' => false,
+	        'yarpp_support'       => true,
+		'taxonomies' 	      => array('post_tag'),
+		'publicly_queryable'  => true,
+		'capability_type'     => 'page'
+);
+	register_post_type( 'sessions', $args );
+}
+add_action( 'init', 'sessions_custom_post_type', 0 );
+
+
+// Creating a Speakers Custom Post Type
+function speakers_custom_post_type() {
+	$labels = array(
+		'name'                => __( 'Speakers' ),
+		'singular_name'       => __( 'Speaker'),
+		'menu_name'           => __( 'Speakers'),
+		'parent_item_colon'   => __( 'Parent Speaker'),
+		'all_items'           => __( 'All Speakers'),
+		'view_item'           => __( 'View Speaker'),
+		'add_new_item'        => __( 'Add New Speaker'),
+		'add_new'             => __( 'Add New'),
+		'edit_item'           => __( 'Edit Speaker'),
+		'update_item'         => __( 'Update Speaker'),
+		'search_items'        => __( 'Search Speaker'),
+		'not_found'           => __( 'Not Found'),
+		'not_found_in_trash'  => __( 'Not found in Trash')
+	);
+	$args = array(
+		'label'               => __( 'speakers'),
+		'description'         => __( 'Speakers CPT'),
+		'labels'              => $labels,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields'),
+		'public'              => true,
+		'hierarchical'        => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_admin_bar'   => true,
+		'has_archive'         => true,
+		'can_export'          => true,
+		'exclude_from_search' => false,
+	        'yarpp_support'       => true,
+		'taxonomies' 	      => array('post_tag'),
+		'publicly_queryable'  => true,
+		'capability_type'     => 'page'
+);
+	register_post_type( 'speakers', $args );
+}
+add_action( 'init', 'speakers_custom_post_type', 0 );
+
+
+// Taxonomy for Custom Post Type Speakers
+add_action( 'init', 'create_speakers_positions_custom_taxonomy', 0 );
+ 
+//create a custom taxonomy "position"
+function create_speakers_positions_custom_taxonomy() {
+ 
+  $labels = array(
+    'name' => _x( 'Positions', 'taxonomy general name' ),
+    'singular_name' => _x( 'Position', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Positions' ),
+    'all_items' => __( 'All Positions' ),
+    'parent_item' => __( 'Parent Positions' ),
+    'parent_item_colon' => __( 'Parent Position:' ),
+    'edit_item' => __( 'Edit Position' ), 
+    'update_item' => __( 'Update Position' ),
+    'add_new_item' => __( 'Add New Position' ),
+    'new_item_name' => __( 'New Position Name' ),
+    'menu_name' => __( 'Positions' ),
+  ); 	
+ 
+  register_taxonomy('positions',array('speakers'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'position' ),
+  ));
+}
+
+// Taxonomy for Custom Post Type Speakers
+add_action( 'init', 'create_speakers_countries_custom_taxonomy', 0 );
+ 
+//create a custom taxonomy "position"
+function create_speakers_countries_custom_taxonomy() {
+ 
+  $labels = array(
+    'name' => _x( 'Countries', 'taxonomy general name' ),
+    'singular_name' => _x( 'Country', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Countries' ),
+    'all_items' => __( 'All Countries' ),
+    'parent_item' => __( 'Parent Countries' ),
+    'parent_item_colon' => __( 'Parent Country:' ),
+    'edit_item' => __( 'Edit Country' ), 
+    'update_item' => __( 'Update Country' ),
+    'add_new_item' => __( 'Add New Country' ),
+    'new_item_name' => __( 'New Country Name' ),
+    'menu_name' => __( 'Countries' ),
+  ); 	
+ 
+  register_taxonomy('countries',array('speakers'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'country' ),
+  ));
 }
