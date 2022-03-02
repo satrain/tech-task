@@ -250,7 +250,7 @@ function speakers_custom_post_type() {
 		'label'               => __( 'speakers'),
 		'description'         => __( 'Speakers CPT'),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields'),
+		'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields'),
 		'public'              => true,
 		'hierarchical'        => false,
 		'show_ui'             => true,
