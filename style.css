@@ -66,6 +66,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
 }
 
 html {
@@ -74,7 +75,113 @@ html {
 
 .container {
 	display: block;
-	max-width: 1600px;
-	margin: 0 auto;
 	padding: 0 50px;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+li {
+	list-style: none;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 35px 50px 23px; 
+}
+
+nav {
+	width: 75%;
+}
+
+nav ul {
+	display: flex;
+	align-items: center;
+}
+
+nav ul li {
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+nav ul li a {
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 28px;
+	color: #323232;
+}
+
+.btn {
+	display: inline-block;
+	outline: unset;
+	border: unset;
+	font-weight: 600;
+	font-size: 14px;
+	padding: 16px 89px;
+	text-transform: uppercase;
+	cursor: pointer;
+	background: #323232;
+	color: #fff;
+}
+
+.header-btn {
+	background: #fff;
+	border: 1px solid #000000;
+	color: #323232;
+}
+
+/* Hero Section */
+.hero {
+	width: 100%;
+	height: 791px;
+	background-size: cover!important;
+	background-repeat: no-repeat!important;
+	overflow: hidden;
+}
+
+.hero-copy {
+	margin: 60px auto 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.hero-notification {
+	margin-bottom: 20px;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 28px;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+
+	color: #323232;
+}
+
+.hero-notification > span {
+	color: #22BAC9!important;
+}
+
+h1 {
+	font-weight: 900;
+	font-size: 64px;
+	line-height: 140%;
+	text-align: center;
+
+	color: #323232;
+}
+
+.hero-subheading {
+	max-width: 500px;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 140%;
+	text-align: center;
+
+	color: #606060;
 }
