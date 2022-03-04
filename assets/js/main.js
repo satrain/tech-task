@@ -1,3 +1,11 @@
+window.addEventListener('load', (event) => {
+    let articles = document.querySelectorAll('article.speakers')
+
+    if(articles.length < 20) {
+        document.querySelector('#more_posts').style.display = "none"
+    }
+});
+
 function changeHamburgerMenu(x) {
     x.classList.toggle("change");
 }
@@ -38,7 +46,7 @@ $("#more_posts").on("click", function(e) {
        url: ajaxurl,
        data: {
        action: "more_post_ajax", // add your action to the data object
-       offset: page * 5 //  page # x your default posts per page
+       offset: page * 20 //  page # x your default posts per page
        },
        success: function(data) {
         // add the posts to the container and add to your page count
