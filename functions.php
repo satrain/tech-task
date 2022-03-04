@@ -289,7 +289,7 @@ function more_post_ajax(){
      $args = array(
         'post_type' => 'speakers',
          'status' => 'publish',
-         'posts_per_page' => 5,
+         'posts_per_page' => 20,
          'order' => 'ASC',
          'offset' => $offset,
      );

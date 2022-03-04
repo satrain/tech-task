@@ -17,7 +17,7 @@ get_header();
 	$args = array(
         'post_type' => 'speakers',
         'post_status' => 'publish',
-        'posts_per_page' => '5',
+        'posts_per_page' => '20',
 		'order' => 'ASC',
       );
       $cpt = new WP_Query( $args ); ?>
