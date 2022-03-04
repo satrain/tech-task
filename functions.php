@@ -147,10 +147,20 @@ function tech_task_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
+	wp_enqueue_script('jquery-cdn', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', array(), _S_VERSION, true);
+
+
 	wp_enqueue_script( 'main-js', get_template_directory_uri() . '/assets/js/main.js', array(), _S_VERSION, true );
-	wp_enqueue_script('main-js');
+
 }
 add_action( 'wp_enqueue_scripts', 'tech_task_scripts' );
+
+add_action('wp_head', 'myplugin_ajaxurl');
+function myplugin_ajaxurl() {
+    echo '<script type="text/javascript">
+           var ajaxurl = "' . admin_url('admin-ajax.php') . '";
+         </script>';
+}
 
 /**
  * Implement the Custom Header feature.
@@ -329,3 +339,149 @@ function create_speakers_countries_custom_taxonomy() {
     'rewrite' => array( 'slug' => 'country' ),
   ));
 }
+
+// remove Archive: from the title archive (leave only post type name, e.g. 'Speakers')
+add_filter( 'get_the_archive_title', function ($title) {    
+	if (is_post_type_archive()) {
+		$title = post_type_archive_title( '', false );
+	}
+	return $title;    
+});
+
+
+
+
+function mysite_filter_function(){
+
+	//groups checkboxes
+	if( $groups = get_terms( array( 'taxonomy' => 'positions' ) ) ) :
+	$groups_terms = array();
+	
+	foreach( $groups as $group ) {
+		if( isset( $_POST['positions_' . $group->term_id ] ) && $_POST['positions_' . $group->term_id] == 'on' )
+			 $groups_terms[] = $group->slug;
+	}
+	endif;
+	
+	//teachers checkboxes
+	if( $teachers = get_terms( array( 'taxonomy' => 'countries' ) ) ) :
+	$teachers_terms = array();
+	
+	foreach( $teachers as $teacher ) {
+		if( isset( $_POST['countries_' . $teacher->term_id ] ) && $_POST['countries_' . $teacher->term_id] == 'on' )
+			 $teachers_terms[] = $teacher->slug;
+	}
+	endif;
+	
+	
+	
+	// if (empty($groups_terms) || empty($teachers_terms) ) {
+	//  $relation = 'OR';
+	// }else{
+	//  $relation = 'AND';
+	// }
+	
+	// $args = array(
+	// 	'orderby' => 'date',
+	// 	'post_type' => 'speakers',
+	// 	'posts_per_page' => -1,
+	// 	'tax_query' => array(
+	// 		'relation' => $relation,
+	// 		array(
+	// 			'taxonomy' => 'positions',
+	// 			'field' => 'slug',
+	// 			'terms' => $groups_terms
+	// 		),
+	// 		array(
+	// 			'taxonomy' => 'countries',
+	// 			'field' => 'slug',
+	// 			'terms' => $teachers_terms
+	// 		)
+	// 	)
+	// );
+
+	$tax_query = array( 'relation' => 'AND' );
+
+	if ( ! empty( $groups_terms ) ) {
+		$tax_query[] = array(
+			'taxonomy' => 'positions',
+			'field'    => 'slug',
+			'terms'    => $groups_terms,
+		);
+	}
+
+	if ( ! empty( $teachers_terms ) ) {
+		$tax_query[] = array(
+			'taxonomy' => 'countries',
+			'field'    => 'slug',
+			'terms'    => $teachers_terms,
+		);
+	}
+
+	$args = array(
+		'orderby'        => 'date',
+		'post_type'      => 'speakers',
+		'posts_per_page' => 5,
+		'tax_query'      => $tax_query,
+	);
+
+	
+	$query = new WP_Query( $args );
+	$output = '';
+	if( $query->have_posts() ) :
+		while( $query->have_posts() ): $query->the_post();
+			// $output .= '<div>' . tech_task_post_thumbnail();
+			// $output .= '<h2>' . $query->post->post_title . '</h2>';
+			// $output .= '</div>';
+
+			// echo $output;
+
+			// $output = '';
+
+			echo '<article class="speakers">';
+			echo '<div class="entry-item">';
+			tech_task_post_thumbnail();
+			the_title( '<h2 class="entry-title">', '</h2>' );
+			echo '</div></article>';
+			
+
+		endwhile;
+		wp_reset_postdata();
+	else :
+		echo 'No posts found';
+	endif;
+	
+	die();
+}
+add_action('wp_ajax_myfilter', 'mysite_filter_function');
+add_action('wp_ajax_nopriv_myfilter', 'mysite_filter_function');
+
+// load more speakers function
+function more_post_ajax(){
+    $offset = $_GET["offset"];
+
+
+     $args = array(
+        'post_type' => 'speakers',
+         'status' => 'publish',
+         'posts_per_page' => 5,
+         'order' => 'ASC',
+         'offset' => $offset,
+     );
+
+    $post = new WP_Query($args);
+    while ($post->have_posts()) { $post->the_post(); 
+		echo '<article class="speakers">';
+		echo '<div class="entry-item">';
+		tech_task_post_thumbnail();
+		the_title( '<h2 class="entry-title">', '</h2>' );
+		echo '</div></article>';
+    }
+
+   wp_reset_postdata();
+
+     die();
+  }
+
+add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax'); 
+add_action('wp_ajax_more_post_ajax', 'more_post_ajax');
