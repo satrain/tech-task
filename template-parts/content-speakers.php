@@ -50,17 +50,19 @@
 	</div>
 
 	<div class="entry-cpt-sessions">
-		<?php 
-		$projectsLoop = new WP_Query(array('post_type' => 'sessions', 'posts_per_page' => -1));
-		echo '<h2 class="sessions-heading"> Sessions: </h2>';
-		echo '<ol class="sessions-list">';
-			while ($projectsLoop->have_posts()) : $projectsLoop->the_post();
-				$title = get_the_title();
-				$href = get_the_permalink();
-				echo "<li><a href='$href'>$title</a></li>";
-			endwhile;
-		echo '</ol>';
-		?>
+        <h2 class="sessions-heading"> Sessions </h2>
+        <?php 
+		    $post_objects = get_field('sessions');
+
+            if( $post_objects ): ?>
+                <ol class="sessions-list">
+                <?php foreach( $post_objects as $post_object): ?>
+                    <li>
+                        <a href="<?php echo get_permalink($post_object->ID); ?>"><?php echo get_the_title($post_object->ID); ?></a>
+                    </li>
+                <?php endforeach; ?>
+                </ol>
+            <?php endif; ?>
 	</div><!-- .entry-content -->
 
 </article><!-- #post-<?php the_ID(); ?> -->

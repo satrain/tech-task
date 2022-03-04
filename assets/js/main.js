@@ -4,9 +4,11 @@ function changeHamburgerMenu(x) {
 
 let hamburger = document.querySelector('.hamburger')
 let mobileOverlay = document.querySelector('.mobile-menu-overlay')
+let bodyEl = document.querySelector('body')
 
 hamburger.addEventListener('click', () => {
     mobileOverlay.classList.toggle('visible')
+    bodyEl.classList.toggle('fixed-position')
 })
 
 

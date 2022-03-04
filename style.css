@@ -200,13 +200,18 @@ nav ul li.active a {
 	display: none;
 }
 
+.fixed-position {
+	overflow: hidden;
+}
+
 .mobile-menu-overlay {
     display: none;
     position: fixed;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background: #fff;
 	padding: 60px 20px 0;
+	z-index: 99999;
 }
 
 .mobile-menu-overlay nav ul li.active a {
@@ -230,6 +235,17 @@ nav ul li.active a {
 	width: 100%;
 	text-align: center;
 	margin-top: 29px;
+}
+
+@media (min-width: 881px) and (max-width: 1030px) {
+	.header-btn {
+		padding: 10px 55px;
+	}
+
+	nav {
+		width: 70%;
+		margin-left: 0;
+	}
 }
 
 @media screen and (max-width: 880px) {
@@ -400,9 +416,19 @@ h1 {
 	margin-right: 20px;
 }
 
-@media screen and (max-width: 880px) {
+@media (min-width: 881px) and (max-width: 1150px) {
+	.welcome-copy {
+		margin-left: 25px;
+	}
+
 	.welcome-wrapper {
-		padding: 50px 20px!important;
+		padding: 100px 50px!important;
+	}
+}
+
+@media screen and (max-width: 1010px) {
+	.welcome-wrapper {
+		padding: 50px 20px;
 	}
 
 	.welcome {
@@ -483,6 +509,24 @@ footer {
 	margin-top: 98px;
 	display: flex;
 	justify-content: center;
+}
+
+@media (min-width: 964px) and (max-width: 1220px) {
+	.site-info .menu-menu-1-container {
+		margin-left: 42px;
+		margin-right: 22px;
+	}
+}
+
+@media (min-width: 881px) and (max-width: 963px) {
+	.footer-wrapper {
+		padding: 0;
+	}
+
+	.site-info .menu-menu-1-container {
+		margin-left: 42px;
+		margin-right: 22px;
+	}
 }
 
 @media screen and (max-width: 880px) {
@@ -682,6 +726,10 @@ body.post-type-archive-speakers .archive-sidebar-filter {
 }
 
 @media screen and (max-width: 880px) {
+	body.post-type-archive-speakers .page-header h1 {
+		margin-left: 20px;
+	}
+
 	article.speakers {
 		padding: 0 20px;
 	}
@@ -717,5 +765,25 @@ body.post-type-archive-speakers .archive-sidebar-filter {
 
 	.sessions-list {
 		margin-top: 40px;
+	}
+
+	body.post-type-archive-speakers .archive-main-wrapper {
+		flex-direction: column;
+	}
+
+	body.post-type-archive-speakers .archive-sidebar-filter {
+		width: 100%;
+		margin-bottom: 50px;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	body.post-type-archive-speakers .archive-list-wrapper {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	body.post-type-archive-speakers article.speakers {
+		width: 100%;
 	}
 }
